@@ -1,5 +1,5 @@
 <script>
-    let defaultThemeMode = "dark";
+    let defaultThemeMode = "{{ config('settings.app_theme') }}";
     let themeMode;
     if (document.documentElement) {
         if (document.documentElement.hasAttribute("data-bs-theme-mode")) {

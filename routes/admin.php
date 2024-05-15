@@ -15,6 +15,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::get('settings/clearCache', [SettingController::class, 'clearCache'])->name('settings.clearCache');
     Route::resource('settings', SettingController::class)->only(['show', 'update']);
-
     Route::resource('titles', TitleController::class);
 });

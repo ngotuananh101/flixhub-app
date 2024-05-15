@@ -22,10 +22,10 @@ class SettingSeeder extends Seeder
             $settings[$line[0]] = $line[1];
         }
         $settings['locales'] = json_encode(['en']);
-        $settings['app_favicon'] = 'assets/media/favicons/favicon.png';
-        $settings['app_logo_small'] = 'assets/media/logos/logo-small.png';
-        $settings['app_logo'] = 'assets/media/logos/logo.png';
-        $settings['app_logo_dark'] = 'assets/media/logos/logo-dark.png';
+        $settings['app_favicon'] = 'assets/media/logos/favicon.ico';
+        $settings['app_logo_small'] = 'assets/media/logos/default-small.svg';
+        $settings['app_logo'] = 'assets/media/logos/default.svg';
+        $settings['app_logo_dark'] = 'assets/media/logos/default-dark.svg';
 
         foreach ($settings as $key => $value) {
             $key = strtolower($key);
