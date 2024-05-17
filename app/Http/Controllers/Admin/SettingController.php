@@ -157,11 +157,9 @@ class SettingController extends Controller
                 Setting::updateOrCreate(['key' => $key], ['value' => $value]);
                 $this->updateEnv($key, $value);
             }
-
             if (cache()->has('settings')) {
                 cache()->forget('settings');
             }
-
             return redirect()->back()->with('success', 'General settings updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
