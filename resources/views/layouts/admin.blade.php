@@ -5,6 +5,7 @@
     <base href="{{ config('settings.app_url') }}"/>
     <title>@yield('title', config('settings.app_name')) | {{ config('settings.app_name') }}</title>
     <meta charset="utf-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="description" content="{{ config('settings.app_description') }}"/>
     <meta name="keywords" content="{{ config('settings.app_keywords') }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -36,6 +37,7 @@
         </div>
     </div>
 </div>
+<script src="{{ route('admin.translation') }}"></script>
 @include('layouts.partials.scroll-top')
 @include('layouts.partials.scripts')
 @include('layouts.partials.admin.toggle-sidebar')

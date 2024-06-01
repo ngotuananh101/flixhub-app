@@ -4,6 +4,7 @@ return [
     'sidebar' => [
         'analytics' => 'Analytics',
         'system_settings' => 'System Settings',
+        'roles' => 'Roles',
     ],
     'settings' => [
         'general' => [
@@ -71,6 +72,35 @@ return [
             'note' => 'Note',
             'cache_info' => 'Caching is a technique used to store copies of files or data in a place where subsequent requests for that data can be served faster.',
             'save' => 'Save Cache Settings',
+        ],
+    ],
+    'roles' => [
+        'title' => 'Roles Management',
+        'description' => 'Configure roles for the application.',
+        'actions' => [
+            'title' => 'Actions',
+            'reload' => 'Reload',
+            'create' => 'Create Role',
+            'search' => 'Search Roles...',
+            'edit' => 'Edit',
+            'delete' => 'Delete',
+            'selected' => 'Selected',
+            'delete_confirmation' => 'Are you sure you want to delete selected roles?',
+            'delete_confirm' => 'Yes, delete them!',
+            'cancel' => 'No, cancel',
+            'delete_success' => 'Selected roles have been deleted successfully!',
+            'delete_error' => 'Could not delete :names role!',
+        ],
+        'columns' => [
+            'name' => 'Name',
+            'guard_name' => 'Guard',
+            'is_default' => 'Default',
+            'last_updated' => 'Last Updated',
+            'actions' => 'Actions',
+        ],
+        'create' => [
+            'title' => 'Create Role',
+            'description' => 'Create a new role for the application.',
         ],
     ],
 ];
