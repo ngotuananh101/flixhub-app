@@ -48,11 +48,17 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permissionsAll = Permission::all();
+        $permissions = $this->getPermissionsForJsTree($role);
+        return view('pages.admin.roles.edit', [
+            'role' => $role,
+            'permissions' => $permissions
+        ]);
+    }
 
+    public function getPermissionsForJsTree(Role $role = null){
+        $permissionsAll = Permission::all();
         // Tạo mảng lưu các nhóm quyền
         $groupedPermissions = [];
-
         foreach ($permissionsAll as $permission) {
             $explored = explode('.', $permission->name);
             $groupName = $explored[0];
@@ -78,20 +84,19 @@ class RoleController extends Controller
                 $groupedPermissions[$groupName]['children'][$groupName2]['children'][] = [
                     'text' => $groupName3,
                     'id' => $permission->name,
-                    'state' => ['selected' => $role->hasPermissionTo($permission->name)],
+                    'state' => ['selected' => $role?->hasPermissionTo($permission->name)],
                     'icon' => 'ki-solid ki-folder text-danger'
                 ];
             } else {
                 $groupedPermissions[$groupName]['children'][] = [
                     'text' => $groupName2,
                     'id' => $permission->name,
-                    'state' => ['selected' => $role->hasPermissionTo($permission->name)],
+                    'state' => ['selected' => $role?->hasPermissionTo($permission->name)],
                     'icon' => 'ki-solid ki-folder text-warning'
                 ];
             }
         }
-
-        $permissions = array_values(array_map(function ($group) {
+        return array_values(array_map(function ($group) {
             $group['children'] = array_values(array_map(function ($subGroup) {
                 if (isset($subGroup['children'])) {
                     $subGroup['children'] = array_values($subGroup['children']);
@@ -100,11 +105,6 @@ class RoleController extends Controller
             }, $group['children']));
             return $group;
         }, $groupedPermissions));
-
-        return view('pages.admin.roles.edit', [
-            'role' => $role,
-            'permissions' => $permissions
-        ]);
     }
 
     public function update(Request $request, $id)
@@ -114,7 +114,7 @@ class RoleController extends Controller
                 'name' => 'required|string|unique:roles,name,' . $id,
                 'guard_name' => 'required|string',
                 'is_default' => 'nullable|boolean',
-                'permissions' => 'required|string',
+                'permissions' => 'nullable|string',
             ]);
             $role = Role::findOrFail($id);
             $role->name = $request->name;
@@ -135,7 +135,7 @@ class RoleController extends Controller
                     $role->is_default = 0;
                 }
             }
-            $permissionList = explode(',', $request->permissions);
+            $permissionList = explode(',', $request->permissions ?? '');
             $permissions = [];
             foreach ($permissionList as $permission) {
                 // Check if permission exists
@@ -148,6 +148,53 @@ class RoleController extends Controller
             $role->updated_at = now();
             $role->save();
             return redirect()->route('admin.roles.index')->with('success', __('admin.roles.actions.edit_success', ['name' => $role->name]));
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function create()
+    {
+        return view('pages.admin.roles.create', [
+            'permissions' => $this->getPermissionsForJsTree(null)
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|unique:roles',
+                'guard_name' => 'required|string',
+                'is_default' => 'nullable|boolean',
+                'permissions' => 'nullable|string',
+            ]);
+            $role = Role::create([
+                'name' => $request->name,
+                'guard_name' => $request->guard_name,
+                'is_default' => $request->has('is_default') && $request->is_default ? 1 : 0
+            ]);
+
+            if ($request->has('is_default') && $request->is_default) {
+                // Get other default role
+                $defaultRole = Role::where('is_default', 1)->where('id', '!=', $role->id)->first();
+                if ($defaultRole) {
+                    $defaultRole->is_default = 0;
+                    $defaultRole->save();
+                }
+            }
+
+            $permissionList = explode(',', $request->permissions ?? '');
+            $permissions = [];
+            foreach ($permissionList as $permission) {
+                // Check if permission exists
+                $permission = Permission::where('name', $permission)->first();
+                if ($permission) {
+                    $permissions[] = $permission;
+                }
+            }
+            $role->syncPermissions($permissions);
+            return redirect()->route('admin.roles.index')->with('success', __('admin.roles.actions.create_success', ['name' => $role->name]));
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }

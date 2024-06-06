@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', __('admin.roles.edit.title'))
+@section('title', __('admin.roles.create.title'))
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/plugins/custom/jstree/jstree.bundle.css') }}">
@@ -16,9 +16,9 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        {{ __('admin.roles.edit.title') }}
+                        {{ __('admin.roles.create.title') }}
                     </h1>
-                    <p class="fw-bold fs-7 text-gray-400">{{ __('admin.roles.edit.description') }}</p>
+                    <p class="fw-bold fs-7 text-gray-400">{{ __('admin.roles.create.description') }}</p>
                     <!--end::Title-->
                 </div>
                 <!--end::Page title-->
@@ -44,26 +44,26 @@
                 <!--end::Alert message-->
                 <div class="card card-flush mb-6 mb-xl-8 h-100">
                     <div class="card-body p-9 pt-6">
-                        <form action="{{ route('admin.roles.update', $role->id) }}" method="POST" class="row">
+                        <form action="{{ route('admin.roles.store') }}" method="POST" class="row">
                             @csrf
-                            @method('PUT')
                             <input type="hidden" name="permissions" id="inputPermissions">
                             <div class="col-12 mb-5 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">{{ __('admin.roles.fields.name') }}</label>
                                 <input type="text" class="form-control form-control-solid" name="name"
-                                    value="{{ $role->name }}" placeholder="{{ __('admin.roles.fields.name') }}"
-                                    required />
+                                       value="" placeholder="{{ __('admin.roles.fields.name') }}"
+                                       required/>
                             </div>
                             <div class="col-12 mb-5 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">{{ __('admin.roles.fields.guard_name') }}</label>
+                                <label
+                                    class="required fs-6 fw-bold mb-2">{{ __('admin.roles.fields.guard_name') }}</label>
                                 <input type="text" class="form-control form-control-solid" name="guard_name"
-                                    value="{{ $role->guard_name }}"
-                                    placeholder="{{ __('admin.roles.fields.guard_name') }}" required />
+                                       value=""
+                                       placeholder="{{ __('admin.roles.fields.guard_name') }}" required/>
                             </div>
                             <div class="col-12 mb-5 fv-row">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="is_default" id="is_default"
-                                        {{ $role->is_default ? 'checked' : '' }} value="1">
+                                           value="1">
                                     <label class="fw-bold" for="flexCheckDefault">
                                         Default ?
                                     </label>
@@ -97,5 +97,5 @@
     <script>
         let groupPermission = @json($permissions);
     </script>
-    <script src="{{ asset('assets/js/custom/admin/roles/edit.js') }}"></script>
+        <script src="{{ asset('assets/js/custom/admin/roles/create.js') }}"></script>
 @endpush
