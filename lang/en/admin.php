@@ -90,6 +90,9 @@ return [
             'cancel' => 'No, cancel',
             'delete_success' => 'Selected roles have been deleted successfully!',
             'delete_error' => 'Could not delete :names role!',
+            'save' => 'Save',
+            'default_role_cannot_change' => 'You must set another default role before changing this role!',
+            'edit_success' => 'Role :name has been updated successfully!',
         ],
         'columns' => [
             'name' => 'Name',
@@ -102,5 +105,18 @@ return [
             'title' => 'Create Role',
             'description' => 'Create a new role for the application.',
         ],
+        'edit' => [
+            'title' => 'Edit Role',
+            'description' => 'Edit a role for the application.',
+        ],
+        'fields' => [
+            'name' => 'Name',
+            'guard_name' => 'Guard Name',
+            'is_default' => 'Default',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'deleted_at' => 'Deleted At',
+            'permissions' => 'Permissions',
+        ]
     ],
 ];

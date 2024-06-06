@@ -16,9 +16,9 @@
     <meta property="og:site_name" content="{{ config('settings.app_name') }}"/>
     <link rel="canonical" href="{{ url()->current() }}"/>
     <link rel="shortcut icon" href="{{ asset(config('settings.app_favicon')) }}"/>
+    @stack('styles')
     @include('layouts.partials.styles')
     @include('layouts.partials.click-jacking')
-    @stack('styles')
 </head>
 <body id="kt_app_body" data-kt-app-layout="light-sidebar" data-kt-app-header-fixed="true"
       data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
