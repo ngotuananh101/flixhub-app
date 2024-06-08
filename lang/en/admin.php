@@ -5,6 +5,7 @@ return [
         'analytics' => 'Analytics',
         'system_settings' => 'System Settings',
         'roles' => 'Roles',
+        'users' => 'Users',
     ],
     'settings' => [
         'general' => [
@@ -120,4 +121,17 @@ return [
             'permissions' => 'Permissions',
         ]
     ],
+    'users' => [
+        'title' => 'Users Management',
+        'description' => 'Configure users for the application.',
+        'actions' => [
+            'create' => 'Create User',
+            'search' => 'Search Users...',
+            'reload' => 'Reload',
+        ],
+        'fields' => [
+            'username' => 'Username',
+            'email' => 'Email',
+        ]
+    ]
 ];
