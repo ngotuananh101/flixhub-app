@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Exceptions\Exception;
@@ -10,6 +11,7 @@ use Yajra\DataTables\Exceptions\Exception;
 class DatatableController extends Controller
 {
     /**
+     * Get data for roles table.
      * @throws Exception
      * @throws \Exception
      */
@@ -48,6 +50,34 @@ class DatatableController extends Controller
 						</div>';
             })
             ->rawColumns(['is_default', 'updated_at', 'checkbox', 'actions'])
+            ->make(true);
+    }
+
+    /**
+     * Get data for users table.
+     * @throws Exception
+     * @throws \Exception
+     */
+    public function users(Request $request)
+    {
+        $users = User::all();
+        return datatables()
+            ->of($users)
+            ->editColumn('is_active', function ($user) {
+                return $user->is_active ? 'Yes' : 'No';
+            })
+            ->editColumn('last_login_at', function ($user) {
+                return $user->last_login_at ? $user->last_login_at->diffForHumans() : 'N/A';
+            })
+            ->addColumn('checkbox', function ($user) {
+                return '<div class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input class="form-check-input" type="checkbox" value="' . $user->id . '" />
+                </div>';
+            })
+            ->addColumn('actions', function ($user) {
+                return '';
+            })
+            ->rawColumns(['is_active', 'last_login_at', 'checkbox', 'actions'])
             ->make(true);
     }
 }

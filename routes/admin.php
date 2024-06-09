@@ -15,6 +15,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::group(['prefix' => 'datatables'], function () {
         Route::post('roles', [DatatableController::class, 'roles'])->name('datatables.roles');
+        Route::post('users', [DatatableController::class, 'users'])->name('datatables.users');
         Route::post('titles', [DatatableController::class, 'titles'])->name('datatables.titles');
     });
 
