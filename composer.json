@@ -8,9 +8,9 @@
         "php": "^8.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
-        "mongodb/laravel-mongodb": "4.4",
         "predis/predis": "^2.2",
         "sentry/sentry-laravel": "^4.5",
+        "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-permission": "^6.7",
         "yajra/laravel-datatables-oracle": "^11"
     },
