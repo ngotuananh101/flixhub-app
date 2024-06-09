@@ -17,15 +17,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
+        'name',
         'email',
-        'google_id',
-        'facebook_id',
-        'email_verified_at',
         'password',
-        'last_login_at',
-        'is_active',
-        'remember_token',
     ];
 
     /**
@@ -48,8 +42,6 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'last_login_at' => 'datetime',
-            'is_active' => 'boolean',
         ];
     }
 }
