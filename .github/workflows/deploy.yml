@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check ALLOW_DEPLOY
-        if: env.ALLOW_DEPLOY == 'true'
-        run: echo "Deployment allowed"
 
       - name: Check NOT ALLOW_DEPLOY
         if: env.ALLOW_DEPLOY != 'true'
