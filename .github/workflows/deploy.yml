@@ -1,34 +1,42 @@
 name: Deploy To Server Using SSH
 
 on:
-    push:
-        branches:
-            - master # Trigger push on main branch
+  push:
+    branches:
+      - master # Trigger push on main branch
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Deploy
-              uses: appleboy/ssh-action@master
-              with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USERNAME }}
-                  key: ${{ secrets.SSH_KEY }}
-                  port: ${{ secrets.SSH_PORT }}
-                  script: |
-                      cd ${{ secrets.DEPLOY_PATH }}
-                      git checkout main
-                      git pull
-                      COMPOSER_ALLOW_SUPERUSER=1 php83 /usr/bin/composer install
-                      php83 artisan migrate
-                      php83 artisan optimize
-                      php83 artisan cache:clear
-                      php83 artisan config:clear
-                      php83 artisan route:clear
-                      php83 artisan view:clear
-                      php83 artisan clear-compiled
-                      find . -type f ! -name '.user.ini' -exec chmod 644 {} +
-                      find . -type f ! -name '.user.ini' -exec chown www:www {} +
-                      find . -type d ! -name '.user.ini' -exec chmod 755 {} +
-                      find . -type d ! -name '.user.ini' -exec chown www:www {} +
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check ALLOW_DEPLOY
+        if: env.ALLOW_DEPLOY == 'true'
+        run: echo "Deployment allowed"
+
+      - name: Deploy
+        if: env.ALLOW_DEPLOY == 'true'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git checkout main
+            git pull
+            COMPOSER_ALLOW_SUPERUSER=1 php83 /usr/bin/composer install
+            php83 artisan migrate
+            php83 artisan optimize
+            php83 artisan cache:clear
+            php83 artisan config:clear
+            php83 artisan route:clear
+            php83 artisan view:clear
+            php83 artisan clear-compiled
+            find . -type f ! -name '.user.ini' -exec chmod 644 {} +
+            find . -type f ! -name '.user.ini' -exec chown www:www {} +
+            find . -type d ! -name '.user.ini' -exec chmod 755 {} +
+            find . -type d ! -name '.user.ini' -exec chown www:www {} +
+
+env:
+  ALLOW_DEPLOY: ${{ secrets.ALLOW_DEPLOY }}
