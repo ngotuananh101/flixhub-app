@@ -3,7 +3,7 @@ name: Deploy To Server Using SSH
 on:
     push:
         branches:
-            - main # Trigger push on main branch
+            - master # Trigger push on main branch
 
 jobs:
     deploy:
