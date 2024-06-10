@@ -125,13 +125,29 @@ return [
         'title' => 'Users Management',
         'description' => 'Configure users for the application.',
         'actions' => [
+            'title' => 'Actions',
             'create' => 'Create User',
             'search' => 'Search Users...',
             'reload' => 'Reload',
+            'edit' => 'Edit',
+            'delete' => 'Delete',
         ],
         'fields' => [
+            'user' => 'User',
+            'roles' => 'Roles',
             'username' => 'Username',
             'email' => 'Email',
+            'google_id' => 'Google ID',
+            'facebook_id' => 'Facebook ID',
+            'email_verified_at' => 'Email Verified At',
+            'password' => 'Password',
+            'last_login_at' => 'Last Login At',
+            'is_active' => 'Active',
+            'permissions' => 'Permissions',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'deleted_at' => 'Deleted At',
+            'actions' => 'Actions',
         ]
     ]
 ];

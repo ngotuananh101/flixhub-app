@@ -17,9 +17,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'avatar',
+        'username',
         'email',
+        'google_id',
+        'facebook_id',
+        'email_verified_at',
         'password',
+        'last_login_at',
+        'is_active',
+        'remember_token',
     ];
 
     /**
@@ -42,6 +49,30 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'last_login_at' => 'datetime',
+            'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Override the boot method of the model.
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if(empty($model->avatar)) {
+                $model->avatar = 'https://ui-avatars.com/api/?background=random&size=256&name=' . $model->username;
+            }
+        });
+    }
+
+    /**
+     * Getter
+     */
+    public function getAvatarAttribute($value): string
+    {
+        return $value ?? 'https://ui-avatars.com/api/?background=random&size=256&name=' . $this->username;
     }
 }
