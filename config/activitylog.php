@@ -49,4 +49,9 @@ return [
      * Laravel's database.default will be used instead.
      */
     'database_connection' => env('ACTIVITY_LOGGER_DB_CONNECTION'),
+
+    /*
+     * This is dictionary that will be used to store backup logs.
+     */
+    'backup_log_dictionary' => storage_path() . '/app/backup/activity-log/',
 ];
