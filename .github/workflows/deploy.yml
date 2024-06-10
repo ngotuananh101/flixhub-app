@@ -29,5 +29,6 @@ jobs:
                       php83 artisan view:clear
                       php83 artisan clear-compiled
                       find . -type f ! -name '.user.ini' -exec chmod 644 {} +
+                      find . -type f ! -name '.user.ini' -exec chown www:www {} +
                       find . -type d ! -name '.user.ini' -exec chmod 755 {} +
-                      chown -R www:www .
+                      find . -type d ! -name '.user.ini' -exec chown www:www {} +
