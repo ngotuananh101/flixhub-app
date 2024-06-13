@@ -5,6 +5,7 @@
 
   # Use https://search.nixos.org/packages to find packages
   packages = [
+    pkgs.sqlite
     pkgs.php83
     pkgs.php83Packages.composer
     pkgs.php83Extensions.xml
@@ -35,6 +36,7 @@
     "MrChetan.goto-laravel-components"
     "stef-k.laravel-goto-controller"
     "devsense.phptools-vscode"
+    "cweijan.vscode-database-client2"
   ];
 
   # Enable previews and customize configuration
