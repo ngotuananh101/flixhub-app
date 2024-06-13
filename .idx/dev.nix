@@ -25,7 +25,16 @@
 
   # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
   idx.extensions = [
-    "Codeium.codeium"
+    "esbenp.prettier-vscode"
+    "dbaeumer.vscode-eslint"
+    "formulahendry.auto-close-tag"
+    "formulahendry.auto-rename-tag"
+    "shufo.vscode-blade-formatter"
+    "codingyu.laravel-goto-view"
+    "MrChetan.laravel-goto-config"
+    "MrChetan.goto-laravel-components"
+    "stef-k.laravel-goto-controller"
+    "devsense.phptools-vscode"
   ];
 
   # Enable previews and customize configuration
