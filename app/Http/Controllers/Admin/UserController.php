@@ -69,7 +69,41 @@ class UserController extends Controller
     {
         try {
             $ids = $request->input('ids');
-            User::destroy($ids);
+            $errors = [];
+            foreach ($ids as $id) {
+                $user = User::find($id);
+                if ($user) {
+                    // Check if the user is super admin
+                    if ($user->hasRole('super-admin')) {
+                        // Check if the current user is not super admin
+                        if (auth()->user()->roles->first()->name !== 'super-admin') {
+                            $errors[] = $id;
+                            continue;
+                        }
+
+                        // Check if the user is the current user
+                        if ($user->id === auth()->user()->id) {
+                            $errors[] = $id;
+                            continue;
+                        }
+
+                        // Check if the user is the only super admin
+                        $superAdmins = User::role('super-admin')->get();
+                        if ($superAdmins->count() === 1) {
+                            $errors[] = $id;
+                            continue;
+                        }
+                    }
+                } else {
+                    $errors[] = $id;
+                }
+            }
+            if (count($errors) > 0) {
+                return response()->json([
+                    'message' => __('admin.users.actions.delete_error', ['names' => implode(',', $errors)]),
+                    'errors' => $errors
+                ], 500);
+            }
             return response()->json([
                 'message' => __('admin.users.actions.delete_success'),
                 'ids' => $ids

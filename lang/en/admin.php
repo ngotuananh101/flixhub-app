@@ -141,7 +141,7 @@ return [
             'delete_confirmation' => 'Are you sure you want to delete selected users?',
             'delete_confirm' => 'Yes, delete them!',
             'delete_success' => 'Selected users have been deleted successfully!',
-            'delete_error' => 'Could not delete :names user! Please try again later!',
+            'delete_error' => 'Could not delete :names ! Please try again later!',
         ],
         'fields' => [
             'user' => 'User',
