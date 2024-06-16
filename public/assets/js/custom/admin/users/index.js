@@ -5,6 +5,7 @@ $(document).ready(function () {
     const selectedCount = $('span[data-kt-users-table-select="selected_count"]');
     const searchInputElement = $('input[data-kt-users-table-filter="search"]');
     const selectAllCheckbox = $('input[data-kt-users-table-select="select_all"]');
+    const deleteUsersButton = $('button[data-kt-users-table-select="delete_selected"]');
     let selected = [];
     let searchInterval = null;
     // Set Datatable
@@ -73,8 +74,9 @@ $(document).ready(function () {
         }, 500);
     });
     selectAllCheckbox.on('change', function () {
-        const rows = usersTable.rows({page: 'current'}).nodes();
-        const isChecked = selectAllCheckbox.is(':checked');
+        let rows = usersTable.rows({page: 'current'}).nodes();
+        console.log(rows);
+        let isChecked = selectAllCheckbox.is(':checked');
         $('input[type="checkbox"]', rows).each(function () {
             this.checked = isChecked;
             if (isChecked) {
@@ -85,47 +87,47 @@ $(document).ready(function () {
         });
         updateToolbar();
     });
-
-    const deleteSelected = (id) => {
-        if (selected.length === 0) {
-            toastr.error('Please select at least one user.');
-            return;
-        }
-        swal.fire({
-            text: 'Are you sure you want to delete selected users?',
-            icon: 'warning',
-            showCancelButton: true,
-            buttonsStyling: false,
-            confirmButtonText: 'Yes, delete!',
-            cancelButtonText: 'No, cancel',
-            customClass: {
-                confirmButton: 'btn btn-danger',
-                cancelButton: 'btn btn-active-light'
-            }
-        }).then(function (result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: usersTableApi + '/' + id,
-                    type: 'DELETE',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        ids: selected
-                    },
-                    success: function (response) {
-                        if (response.status) {
+    deleteUsersButton.on('click', function () {
+        deleteSelected();
+    });
+    const deleteSelected = (ids = selected) => {
+        if (typeof ids === 'string' || typeof ids === 'number') ids = [ids];
+        if (ids.length > 0) {
+            swal.fire({
+                text: translation.users.actions.delete_confirmation,
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: translation.users.actions.delete_confirm,
+                cancelButtonText: translation.users.actions.cancel,
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-active-light'
+                }
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: usersDeleteApi,
+                        type: 'POST',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            _method: 'DELETE',
+                            ids: ids,
+                        },
+                        success: function (response) {
                             toastr.success(response.message);
                             usersTable.ajax.reload();
-                            selected = [];
-                            updateToolbar();
-                        } else {
-                            toastr.error(response.message);
+                        },
+                        error: function (response) {
+                            toastr.error(response.responseJSON.message);
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            }); 
+        } else {
+            toastr.error(translation.users.actions.no_selected);
+        }
     };
-
     const blockSelected = (id) => {
         swal.fire({
             text: translation.users.actions.block_confirmation,
