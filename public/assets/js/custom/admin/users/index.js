@@ -44,7 +44,13 @@ $(document).ready(function () {
             event.preventDefault();
             const id = $(this).data('id');
             deleteSelected(id);
-        })
+        });
+
+        $('a[data-kt-users-table-filter="block_row"]').on('click', function (event) {
+            event.preventDefault();
+            const id = $(this).data('id');
+            blockSelected(id);
+        });
     });
     $('#users-table_reload').on('click', ()=>{
         usersTable.ajax.reload();
@@ -79,4 +85,79 @@ $(document).ready(function () {
         });
         updateToolbar();
     });
+
+    const deleteSelected = (id) => {
+        if (selected.length === 0) {
+            toastr.error('Please select at least one user.');
+            return;
+        }
+        swal.fire({
+            text: 'Are you sure you want to delete selected users?',
+            icon: 'warning',
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: 'Yes, delete!',
+            cancelButtonText: 'No, cancel',
+            customClass: {
+                confirmButton: 'btn btn-danger',
+                cancelButton: 'btn btn-active-light'
+            }
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: usersTableApi + '/' + id,
+                    type: 'DELETE',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        ids: selected
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            toastr.success(response.message);
+                            usersTable.ajax.reload();
+                            selected = [];
+                            updateToolbar();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            }
+        });
+    };
+
+    const blockSelected = (id) => {
+        swal.fire({
+            text: translation.users.actions.block_confirmation,
+            icon: 'warning',
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: translation.users.actions.block_confirm,
+            cancelButtonText: translation.users.actions.cancel,
+            customClass: {
+                confirmButton: 'btn btn-danger',
+                cancelButton: 'btn btn-active-light'
+            }
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: usersUpdateApi,
+                    type: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        _method: 'PUT',
+                        action: 'block',
+                        id: id,
+                    },
+                    success: function (response) {
+                        toastr.success(response.message);
+                        usersTable.ajax.reload();
+                    },
+                    error: function (response) {
+                        toastr.error(response.responseJSON.message);
+                    }
+                });
+            }
+        });
+    };
 });

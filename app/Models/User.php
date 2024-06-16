@@ -6,10 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -64,6 +67,13 @@ class User extends Authenticatable
         static::creating(function ($model) {
             if(empty($model->avatar)) {
                 $model->avatar = 'https://ui-avatars.com/api/?background=random&size=256&name=' . $model->username;
+            }
+        });
+
+        static::created(function ($model) {
+            $defaultRole = Role::where('is_default', true)->first();
+            if ($defaultRole) {
+                $model->assignRole($defaultRole);
             }
         });
     }

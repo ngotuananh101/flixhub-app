@@ -120,13 +120,18 @@ class DatatableController extends Controller
                                 </a>
                             </div>
                             <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-kt-users-table-filter="block_row" data-id="' . $user->id . '">
+                                    ' . __('admin.users.actions.block') . '
+                                </a>
+                            </div>
+                            <div class="menu-item px-3">
                                 <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row" data-id="' . $user->id . '">
                                     ' . __('admin.users.actions.delete') . '
                                 </a>
                             </div>
                         </div>';
             })
-            ->rawColumns(['username', 'is_active', 'last_login_at', 'checkbox', 'actions'])
+            ->rawColumns(['username', 'is_active', 'last_login_at', 'checkbox', 'roles', 'actions'])
             ->make(true);
     }
 }

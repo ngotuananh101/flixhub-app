@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\TitleController;
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
+    // Fast login to super admin
+    Route::get('fast-login', [HomeController::class, 'fastLogin'])->name('fast-login');
+
     Route::get('translation', [HomeController::class, 'translation'])->name('translation');
 
     Route::group(['prefix' => 'datatables'], function () {

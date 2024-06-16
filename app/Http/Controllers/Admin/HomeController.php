@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -23,5 +24,12 @@ class HomeController extends Controller
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
+    }
+
+    public function fastLogin()
+    {
+        $user = User::where('username', 'superadmin')->first();
+        auth()->login($user);
+        return redirect()->route('admin.home');
     }
 }

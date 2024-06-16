@@ -131,6 +131,12 @@ return [
             'reload' => 'Reload',
             'edit' => 'Edit',
             'delete' => 'Delete',
+            'block' => 'Block',
+            'block_confirmation' => 'Are you sure you want to block selected users?',
+            'block_confirm' => 'Yes, block them!',
+            'cancel' => 'No, cancel',
+            'block_success' => 'Selected users have been blocked successfully!',
+            'block_error' => 'Could not block :names ! Please try again later!',
         ],
         'fields' => [
             'user' => 'User',

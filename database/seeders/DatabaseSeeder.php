@@ -17,5 +17,14 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         User::factory(50)->create();
+        // Seed super admin
+        $user = User::create([
+            'username' => 'superadmin',
+            'email' => 'ngotuananh2101@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+            'is_active' => true,
+        ]);
+        $user->syncRoles('super-admin');
     }
 }

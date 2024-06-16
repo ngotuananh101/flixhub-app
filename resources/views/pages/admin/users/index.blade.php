@@ -121,7 +121,8 @@
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script>
         let usersTableApi = "{{ route('admin.datatables.users') }}";
-        let usersTableDeleteApi = "{{ route('admin.users.destroy', '0') }}";
+        let usersUpdateApi = "{{ route('admin.users.update', '0') }}";
+        let usersDeleteApi = "{{ route('admin.users.destroy', '0') }}";
     </script>
     <script src="{{ asset('assets/js/custom/admin/users/index.js') }}"></script>
 @endpush
