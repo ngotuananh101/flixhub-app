@@ -30,6 +30,7 @@ $(document).ready(function () {
         ],
         order: [[2, 'asc']],
     }).on('draw', function () {
+        selectAllCheckbox.prop('checked', false);
         selected = [];
         const rows = usersTable.rows({page: 'current'}).nodes();
         $('input[type="checkbox"]', rows).on('change', function () {
@@ -70,7 +71,7 @@ $(document).ready(function () {
     searchInputElement.on('keyup', function () {
         if (searchInterval) clearTimeout(searchInterval);
         searchInterval = setTimeout(() => {
-            rolesTable.search(searchInputElement.val()).draw();
+            usersTable.search(searchInputElement.val()).draw();
         }, 500);
     });
     selectAllCheckbox.on('change', function () {

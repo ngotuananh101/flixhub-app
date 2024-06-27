@@ -94,7 +94,7 @@
                                     <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                         <input class="form-check-input" type="checkbox" data-kt-check="true"
                                                data-kt-users-table-select="select_all"
-                                               data-kt-check-target="#users-table .form-check-input" value="1"/>
+                                               value="1"/>
                                     </div>
                                 </th>
                                 <th>{{ __('admin.users.fields.user') }}</th>
