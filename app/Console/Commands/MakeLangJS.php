@@ -39,10 +39,21 @@ class MakeLangJS extends Command
         try {
             $script = __('auth');
             $json = json_encode($script);
-            $js = 'var translation = ' . $json . ';';
+            $js = 'var auth_lang = ' . $json . ';';
             $file = public_path('assets/lang/auth.js');
             file_put_contents($file, $js);
             $this->info('Auth translation file has been created successfully.');
+        } catch (\Exception $exception) {
+            $this->error($exception->getMessage());
+        }
+
+        try {
+            $script = __('validation');
+            $json = json_encode($script);
+            $js = 'var validation_lang = ' . $json . ';';
+            $file = public_path('assets/lang/validation.js');
+            file_put_contents($file, $js);
+            $this->info('Validation translation file has been created successfully.');
         } catch (\Exception $exception) {
             $this->error($exception->getMessage());
         }

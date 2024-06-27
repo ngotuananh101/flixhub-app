@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    let t = (key, attribute) => {
+        let string = validation_lang[key];
+        if (attribute !== undefined) {
+            string = string.replace(":attribute", attribute);
+        }
+        return string;
+    };
     let form = document.querySelector("#sign_in_form");
     let submitButton = document.querySelector("#kt_sign_in_submit");
     var validator = FormValidation.formValidation(form, {
@@ -6,17 +13,17 @@ $(document).ready(function () {
             email: {
                 validators: {
                     notEmpty: {
-                        message: "Email is required",
+                        message: t("required", "Email"),
                     },
                     emailAddress: {
-                        message: "The value is not a valid email address",
+                        message: t("email", "Email"),
                     },
                 },
             },
             password: {
                 validators: {
                     notEmpty: {
-                        message: "Password is required",
+                        message: t("required", "Password"),
                     },
                 },
             },
@@ -40,28 +47,48 @@ $(document).ready(function () {
                 // Show loading indication
                 submitButton.setAttribute("data-kt-indicator", "on");
                 submitButton.disabled = true;
-                // Simulate form submission
-                setTimeout(function () {
-                    submitButton.removeAttribute("data-kt-indicator");
-                    submitButton.disabled = false;
-                    // Show popup confirmation
-                    Swal.fire({
-                        text: "You have successfully logged in!",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        },
-                    }).then(function (result) {
-                        if (result.isConfirmed) {
-                            // Reset form
-                            form.reset();
-                            // Hide modal
-                            $("#kt_modal_sign_in").modal("hide");
+                // Send ajax request
+                $.ajax({
+                    url: form.getAttribute("action"),
+                    type: "POST",
+                    data: $(form).serialize(),
+                    success: function (response) {
+                        // Form is validated, submit
+                        if (response.status === "success") {
+                            // Redirect to the next page
+                            window.location.href = response.redirect;
+                        } else {
+                            // Show popup warning
+                            Swal.fire({
+                                text: response.message,
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary",
+                                },
+                            });
                         }
-                    });
-                }, 2000);
+                        // Remove loading indication
+                        submitButton.removeAttribute("data-kt-indicator");
+                        submitButton.disabled = false;
+                    },
+                    error: function (response) {
+                        // Show popup warning
+                        Swal.fire({
+                            text: response.responseJSON.message,
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn btn-primary",
+                            },
+                        });
+                        // Remove loading indication
+                        submitButton.removeAttribute("data-kt-indicator");
+                        submitButton.disabled = false;
+                    },
+                });
             } else {
                 // Show popup warning
                 Swal.fire({

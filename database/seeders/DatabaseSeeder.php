@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
             'is_active' => true,
+            'google_id' => '114944751449340400280',
         ]);
         $user->syncRoles('super-admin');
     }

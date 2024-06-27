@@ -20,7 +20,7 @@ return [
     'login' => 'Login',
     'login_subtitle' => 'Your Social Campaigns',
     'sign_in_with_google' => 'Sign in with Google',
-    'sign_in_with_github' => 'Sign in with GitHub',
+    'sign_in_with_facebook' => 'Sign in with Facebook',
     'or_with_email' => 'Or with email',
     'email' => 'Email',
     'password' => 'Password',
@@ -28,4 +28,6 @@ return [
     'please_wait' => 'Please wait...',
     'not_member_yet' => 'Not a member yet?',
     'register' => 'Register',
+
+    'login_success' => 'Login successful. Redirecting...',
 ];

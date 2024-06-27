@@ -40,6 +40,7 @@
     </div>
     <!--end::Root-->
     <script src="{{ asset('assets/lang/auth.js') }}"></script>
+    <script src="{{ asset('assets/lang/validation.js') }}"></script>
     @include('layouts.partials.scroll-top')
     @include('layouts.partials.scripts')
     @stack('scripts')

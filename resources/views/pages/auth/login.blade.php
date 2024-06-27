@@ -13,8 +13,10 @@
                 <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
+                        @include('layouts.partials.alerts')
                         <!--begin::Form-->
                         <form class="form w-100" novalidate="novalidate" id="sign_in_form" method="POST" action="{{ route('auth.login') }}">
+                            @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
                                 <!--begin::Title-->
@@ -34,7 +36,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6">
                                     <!--begin::Google link=-->
-                                    <a href="#"
+                                    <a href="{{ route('auth.redirectToProvider', 'google') }}"
                                         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                         <img alt="Logo" src="{{ asset('assets/media/svg/brand-logos/google-icon.svg') }}"
                                             class="h-15px me-3" />
@@ -48,9 +50,9 @@
                                     <!--begin::Google link=-->
                                     <a href="#"
                                         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                        <img alt="Logo" src="{{ asset('assets/media/svg/brand-logos/github-icon.svg') }}"
+                                        <img alt="Logo" src="{{ asset('assets/media/svg/brand-logos/facebook-icon.svg') }}"
                                             class="h-15px me-3" />
-                                        {{ __('auth.sign_in_with_github') }}
+                                        {{ __('auth.sign_in_with_facebook') }}
                                         </a>
                                     <!--end::Google link=-->
                                 </div>
@@ -69,6 +71,11 @@
                                 <!--begin::Email-->
                                 <input type="text" placeholder="{{ __('auth.email') }}" name="email" autocomplete="off"
                                     class="form-control bg-transparent" />
+                                @error('email')
+                                <div class="fv-plugins-message-container">
+                                    <div data-field="email" data-validator="notEmpty" class="fv-help-block">{{ $message }}</div>
+                                </div>
+                                @enderror
                                 <!--end::Email-->
                             </div>
                             <!--end::Input group=-->
