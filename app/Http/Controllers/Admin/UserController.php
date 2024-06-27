@@ -70,19 +70,15 @@ class UserController extends Controller
         try {
             $ids = $request->input('ids');
             $errors = [];
+
             foreach ($ids as $id) {
                 $user = User::find($id);
+
                 if ($user) {
                     // Check if the user is super admin
                     if ($user->hasRole('super-admin')) {
                         // Check if the current user is not super admin
                         if (auth()->user()->roles->first()->name !== 'super-admin') {
-                            $errors[] = $id;
-                            continue;
-                        }
-
-                        // Check if the user is the current user
-                        if ($user->id === auth()->user()->id) {
                             $errors[] = $id;
                             continue;
                         }
@@ -94,16 +90,26 @@ class UserController extends Controller
                             continue;
                         }
                     }
+
+                    // Super admin can delete any user, including other super admins
+                    // except if the current user is deleting themselves
+                    if ($user->id !== auth()->user()->id) {
+                        $user->delete();
+                    } else {
+                        $errors[] = $id;
+                    }
                 } else {
                     $errors[] = $id;
                 }
             }
+
             if (count($errors) > 0) {
                 return response()->json([
                     'message' => __('admin.users.actions.delete_error', ['names' => implode(',', $errors)]),
                     'errors' => $errors
                 ], 500);
             }
+
             return response()->json([
                 'message' => __('admin.users.actions.delete_success'),
                 'ids' => $ids
@@ -115,6 +121,7 @@ class UserController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Block the specified resource from storage.

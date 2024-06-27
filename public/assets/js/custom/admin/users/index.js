@@ -32,6 +32,7 @@ $(document).ready(function () {
     }).on('draw', function () {
         selectAllCheckbox.prop('checked', false);
         selected = [];
+        updateToolbar();
         const rows = usersTable.rows({page: 'current'}).nodes();
         $('input[type="checkbox"]', rows).on('change', function () {
             if (this.checked) {
