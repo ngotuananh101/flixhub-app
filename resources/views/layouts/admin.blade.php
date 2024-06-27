@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<script src="{{ route('admin.translation') }}"></script>
+<script src="{{ asset('assets/lang/translation.js') }}"></script>
 @include('layouts.partials.scroll-top')
 @include('layouts.partials.scripts')
 @include('layouts.partials.admin.toggle-sidebar')

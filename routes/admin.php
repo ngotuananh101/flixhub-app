@@ -14,8 +14,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     // Fast login to super admin
     Route::get('fast-login', [HomeController::class, 'fastLogin'])->name('fast-login');
 
-    Route::get('translation', [HomeController::class, 'translation'])->name('translation');
-
     Route::group(['prefix' => 'datatables'], function () {
         Route::post('roles', [DatatableController::class, 'roles'])->name('datatables.roles');
         Route::post('users', [DatatableController::class, 'users'])->name('datatables.users');
