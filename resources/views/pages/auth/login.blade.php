@@ -13,9 +13,9 @@
                 <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
-                        @include('layouts.partials.alerts')
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="sign_in_form" method="POST" action="{{ route('auth.login') }}">
+                        <form class="form w-100" novalidate="novalidate" id="sign_in_form" method="POST"
+                            action="{{ route('auth.login') }}">
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
@@ -38,10 +38,11 @@
                                     <!--begin::Google link=-->
                                     <a href="{{ route('auth.redirectToProvider', 'google') }}"
                                         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                        <img alt="Logo" src="{{ asset('assets/media/svg/brand-logos/google-icon.svg') }}"
+                                        <img alt="Logo"
+                                            src="{{ asset('assets/media/svg/brand-logos/google-icon.svg') }}"
                                             class="h-15px me-3" />
-                                            {{ __('auth.sign_in_with_google') }}
-                                        </a>
+                                        {{ __('auth.sign_in_with_google') }}
+                                    </a>
                                     <!--end::Google link=-->
                                 </div>
                                 <!--end::Col-->
@@ -50,10 +51,11 @@
                                     <!--begin::Google link=-->
                                     <a href="#"
                                         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                        <img alt="Logo" src="{{ asset('assets/media/svg/brand-logos/facebook-icon.svg') }}"
+                                        <img alt="Logo"
+                                            src="{{ asset('assets/media/svg/brand-logos/facebook-icon.svg') }}"
                                             class="h-15px me-3" />
                                         {{ __('auth.sign_in_with_facebook') }}
-                                        </a>
+                                    </a>
                                     <!--end::Google link=-->
                                 </div>
                                 <!--end::Col-->
@@ -71,18 +73,13 @@
                                 <!--begin::Email-->
                                 <input type="text" placeholder="{{ __('auth.email') }}" name="email" autocomplete="off"
                                     class="form-control bg-transparent" />
-                                @error('email')
-                                <div class="fv-plugins-message-container">
-                                    <div data-field="email" data-validator="notEmpty" class="fv-help-block">{{ $message }}</div>
-                                </div>
-                                @enderror
                                 <!--end::Email-->
                             </div>
                             <!--end::Input group=-->
                             <div class="fv-row mb-3">
                                 <!--begin::Password-->
-                                <input type="password" placeholder="{{ __('auth.password') }}" name="password" autocomplete="off"
-                                    class="form-control bg-transparent" />
+                                <input type="password" placeholder="{{ __('auth.password') }}" name="password"
+                                    autocomplete="off" class="form-control bg-transparent" />
                                 <!--end::Password-->
                             </div>
                             <!--end::Input group=-->
@@ -90,8 +87,7 @@
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
                                 <!--begin::Link-->
-                                <a href="authentication/layouts/overlay/reset-password.html"
-                                    class="link-primary">
+                                <a href="authentication/layouts/overlay/reset-password.html" class="link-primary">
                                     {{ __('auth.forgot_password') }} ?
                                 </a>
                                 <!--end::Link-->
@@ -131,8 +127,7 @@
                         <!--begin::Languages-->
                         <div class="me-10">
                             <!--begin::Toggle-->
-                            <button
-                                class="btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base"
+                            <button class="btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base"
                                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                                 data-kt-menu-offset="0px, 0px">
                                 <img data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3"
@@ -180,4 +175,9 @@
 
 @push('scripts')
     <script src="{{ asset('assets/js/custom/auth/login.js') }}"></script>
+    <script>
+        @if (session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
+    </script>
 @endpush

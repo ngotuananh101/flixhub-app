@@ -41,18 +41,20 @@ class LoginController extends Controller
 
     public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-        $pro_id = $provider . '_id';
-        $authUser = User::where('email', $user->email)
-            ->orWhere($pro_id, $user->id)
-            ->first();
-        if ($authUser) {
-            auth()->login($authUser);
-            return redirect()->route('home');
-        } else {
-            return redirect()->route('auth.login')->withErrors([
-                'email' => __('auth.failed')
-            ]);
+        try {
+            $user = Socialite::driver($provider)->user();
+            $pro_id = $provider . '_id';
+            $authUser = User::where('email', $user->email)
+                ->orWhere($pro_id, $user->id)
+                ->first();
+            if ($authUser) {
+                auth()->login($authUser);
+                return redirect()->route('home');
+            } else {
+                return redirect()->route('auth.login')->with('error', __('auth.failed'));
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('auth.login')->with('error', __('auth.failed'));
         }
     }
 }

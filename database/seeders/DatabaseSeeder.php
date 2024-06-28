@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
-        User::factory(50)->create();
         // Seed super admin
         $user = User::create([
             'username' => 'superadmin',
@@ -27,5 +26,6 @@ class DatabaseSeeder extends Seeder
             'google_id' => '114944751449340400280',
         ]);
         $user->syncRoles('super-admin');
+        User::factory(50)->create();
     }
 }

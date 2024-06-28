@@ -1,3 +1,8 @@
+toastr.options = {
+    "closeButton": true,
+    "progressBar": true,
+};
+
 $(document).ready(function () {
     let t = (key, attribute) => {
         let string = validation_lang[key];
