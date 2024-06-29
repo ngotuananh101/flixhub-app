@@ -30,4 +30,9 @@ return [
     'register' => 'Register',
 
     'login_success' => 'Login successful. Redirecting...',
+    'forgot_password_subtitle' => 'Enter your email to reset your password.',
+    'general_error' => 'An error occurred. Please try again later.',
+    'ok' => 'OK, got it!',
+    'cancel' => 'Cancel',
+    'submit' => 'Submit',
 ];
