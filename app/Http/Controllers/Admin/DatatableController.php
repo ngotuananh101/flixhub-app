@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Exceptions\Exception;
 
 class DatatableController extends Controller
@@ -16,22 +16,23 @@ class DatatableController extends Controller
      */
     public function roles(Request $request)
     {
-        $roles = Role::all();
-        return datatables()
-            ->of($roles)
-            ->editColumn('is_default', function ($role) {
-                return $role->is_default ? 'Yes' : 'No';
-            })
-            ->editColumn('updated_at', function ($role) {
-                return $role->updated_at->format('Y-m-d H:i:s');
-            })
-            ->addColumn('checkbox', function ($role) {
-                return '<div class="form-check form-check-sm form-check-custom form-check-solid">
+        try {
+            $roles = Role::all();
+            return datatables()
+                ->of($roles)
+                ->editColumn('is_default', function ($role) {
+                    return $role->is_default ? 'Yes' : 'No';
+                })
+                ->editColumn('updated_at', function ($role) {
+                    return $role->updated_at->format('Y-m-d H:i:s');
+                })
+                ->addColumn('checkbox', function ($role) {
+                    return '<div class="form-check form-check-sm form-check-custom form-check-solid">
                     <input class="form-check-input" type="checkbox" value="' . $role->id . '" />
                 </div>';
-            })
-            ->addColumn('actions', function ($role) {
-                return '<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm table-menu" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                })
+                ->addColumn('actions', function ($role) {
+                    return '<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm table-menu" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             ' . __('admin.roles.actions.title') . '
 							<i class="ki-duotone ki-down fs-5 ms-1"></i>
                         </a>
@@ -47,9 +48,19 @@ class DatatableController extends Controller
                                 </a>
 							</div>
 						</div>';
-            })
-            ->rawColumns(['is_default', 'updated_at', 'checkbox', 'actions'])
-            ->make(true);
+                })
+                ->rawColumns(['is_default', 'updated_at', 'checkbox', 'actions'])
+                ->make(true);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+                'draw' => 1,
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => []
+            ], 200);
+        }
     }
 
     /**
@@ -59,11 +70,12 @@ class DatatableController extends Controller
      */
     public function users(Request $request)
     {
-        $users = User::all();
-        return datatables()
-            ->of($users)
-            ->editColumn('username', function ($user) {
-                return '<div class="d-flex align-items-center">
+        try {
+            $users = User::all();
+            return datatables()
+                ->of($users)
+                ->editColumn('username', function ($user) {
+                    return '<div class="d-flex align-items-center">
 							<div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
 								<a href="' . route('admin.users.show', $user->id) . '">
 									<div class="symbol-label">
@@ -79,37 +91,37 @@ class DatatableController extends Controller
 								<span>' . $user->email . '</span>
 							</div>
 						</div>';
-            })
-            ->editColumn('is_active', function ($user) {
-                return $user->is_active
-                    ? '<span class="badge badge-light-success">Yes</span>'
-                    : '<span class="badge badge-light-danger">No</span>';
-            })
-            ->editColumn('last_login_at', function ($user) {
-                return $user->last_login_at ? $user->last_login_at->diffForHumans() : 'N/A';
-            })
-            ->editColumn('created_at', function ($user) {
-                return $user->created_at->format('Y-m-d H:i:s');
-            })
-            ->addColumn('checkbox', function ($user) {
-                return '<div class="form-check form-check-sm form-check-custom form-check-solid">
+                })
+                ->editColumn('is_active', function ($user) {
+                    return $user->is_active
+                        ? '<span class="badge badge-light-success">Yes</span>'
+                        : '<span class="badge badge-light-danger">No</span>';
+                })
+                ->editColumn('last_login_at', function ($user) {
+                    return $user->last_login_at ? $user->last_login_at->diffForHumans() : 'N/A';
+                })
+                ->editColumn('created_at', function ($user) {
+                    return $user->created_at->format('Y-m-d H:i:s');
+                })
+                ->addColumn('checkbox', function ($user) {
+                    return '<div class="form-check form-check-sm form-check-custom form-check-solid">
                     <input class="form-check-input" type="checkbox" value="' . $user->id . '" />
                 </div>';
-            })
-            ->addColumn('roles', function ($user) {
-                $roles = $user->roles;
-                $result = '';
-                if ($roles) {
-                    foreach ($roles as $role) {
-                        $result .= '<span class="badge badge-light-primary">' . $role->name . '</span>';
+                })
+                ->addColumn('roles', function ($user) {
+                    $roles = $user->roles;
+                    $result = '';
+                    if ($roles) {
+                        foreach ($roles as $role) {
+                            $result .= '<span class="badge badge-light-primary">' . $role->name . '</span>';
+                        }
+                    } else {
+                        $result = 'N/A';
                     }
-                } else {
-                    $result = 'N/A';
-                }
-                return $result;
-            })
-            ->addColumn('actions', function ($user) {
-                return '<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm table-menu" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                    return $result;
+                })
+                ->addColumn('actions', function ($user) {
+                    return '<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm table-menu" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             ' . __('admin.users.actions.title') . '
                             <i class="ki-duotone ki-down fs-5 ms-1"></i>
                         </a>
@@ -130,8 +142,18 @@ class DatatableController extends Controller
                                 </a>
                             </div>
                         </div>';
-            })
-            ->rawColumns(['username', 'is_active', 'last_login_at', 'checkbox', 'roles', 'actions'])
-            ->make(true);
+                })
+                ->rawColumns(['username', 'is_active', 'last_login_at', 'checkbox', 'roles', 'actions'])
+                ->make(true);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+                'draw' => 1,
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => []
+            ], 200);
+        }
     }
 }
