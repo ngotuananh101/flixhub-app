@@ -13,4 +13,10 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('{provider}/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('redirectToProvider');
         Route::get('{provider}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('handleProviderCallback');
     });
+
+    // Authenticated routes
+    Route::group(['middleware' => 'auth'], function () {
+        // Logout
+        Route::match(['get', 'post'], '/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
+    });
 });
