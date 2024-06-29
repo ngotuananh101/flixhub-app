@@ -3,7 +3,7 @@ name: Deploy To Server Using SSH
 on:
   push:
     branches:
-      - master # Trigger push on main branch
+      - master # Trigger push on master branch
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
-            git checkout main
+            git checkout master
             git pull
             COMPOSER_ALLOW_SUPERUSER=1 php83 /usr/bin/composer install
             php83 artisan migrate
