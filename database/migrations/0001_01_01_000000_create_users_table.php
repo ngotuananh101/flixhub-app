@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('avatar')->nullable();
             $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->string('google_id')->nullable();
-            $table->string('facebook_id')->nullable();
+            $table->string('email')->unique()->index();
+            $table->string('google_id')->nullable()->index();
+            $table->string('facebook_id')->nullable()->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('last_login_at')->nullable();
-            $table->boolean('is_active')->default(1);
+            $table->boolean('is_active')->default(1)->index();
             $table->timestamps();
             $table->softDeletes();
         });
