@@ -6,17 +6,41 @@ $(document).ready(function () {
         }
         return string;
     };
-    let form = document.getElementById('password_reset_form');
-    let btnSubmit = form.querySelector('#password_reset_submit');
-    var validator = FormValidation.formValidation(form, {
+
+    let form = document.getElementById('new_password_form');
+    let btnSubmit = form.querySelector('#new_password_submit');
+    let validator = FormValidation.formValidation(form, {
         fields: {
-            email: {
+            password: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Email"),
+                        message: t("required", "Password"),
+                    }, 
+                    stringLength: {
+                        min: 8,
+                        message: function () {
+                            return validation_lang['size']['string'].replace(":attribute", "Password").replace(":size", 8);
+                        },
                     },
-                    emailAddress: {
-                        message: t("email", "Email"),
+                },
+            },
+            password_confirmation: {
+                validators: {
+                    notEmpty: {
+                        message: t("required", "Password Confirmation"),
+                    },
+                    identical: {
+                        compare: function () {
+                            return form.querySelector('[name="password"]').value;
+                        },
+                        message: t("confirmed", "Password Confirmation"),
+                    },
+                },
+            },
+            toc: {
+                validators: {
+                    notEmpty: {
+                        message: t("required", "Terms and Conditions"),
                     },
                 },
             },
@@ -30,16 +54,6 @@ $(document).ready(function () {
             }),
         },
     });
-
-    btnSubmit.addEventListener('click', function (event) {
-        event.preventDefault();
-        submit();
-    });
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        submit();
-    });
-
     let submit = () => {
         validator.validate().then(function (status) {
             if (status === 'Valid') {
@@ -62,10 +76,7 @@ $(document).ready(function () {
                                 }
                             }).then(function (result) {
                                 if (result.isConfirmed) {
-                                    // Reset form
-                                    form.reset();
-                                    btnSubmit.removeAttribute('data-kt-indicator');
-                                    btnSubmit.disabled = false;
+                                    window.location.href = response.redirect;
                                 }
                             });
                         } else {
@@ -86,10 +97,10 @@ $(document).ready(function () {
                             });
                         }
                     },
-                    error: function (data) {
+                    error: function (response) {
                         // Show error message
                         Swal.fire({
-                            text: data.responseJSON.message,
+                            text: response.responseJSON.message,
                             icon: 'error',
                             buttonsStyling: false,
                             confirmButtonText: auth_lang['ok'],
@@ -106,5 +117,14 @@ $(document).ready(function () {
                 });
             }
         });
-    }
+    };
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submit();
+    });
+    btnSubmit.addEventListener('click', function (e) {
+        e.preventDefault();
+        submit();
+    });
 });

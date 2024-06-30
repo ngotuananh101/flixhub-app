@@ -35,4 +35,11 @@ return [
     'ok' => 'OK, got it!',
     'cancel' => 'Cancel',
     'submit' => 'Submit',
+    'reset_password' => 'Reset password',
+    'reset_password_subtitle' => 'Have you already reset the password ?',
+    'password' => 'Password',
+    'password_hint' => 'Use 8 or more characters with a mix of letters, numbers & symbols.',   
+    'password_confirmation' => 'Password confirmation',
+    'password_confirmation_hint' => 'Enter the same password as before, for verification.',
+    'agree_terms' => 'I agree to the terms and conditions',
 ];

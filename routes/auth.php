@@ -15,11 +15,11 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 
         // Forgot password
         Route::get('forgot-password', [App\Http\Controllers\Auth\PasswordController::class, 'showLinkRequestForm'])->name('forgot-password');
-        Route::post('forgot-password', [App\Http\Controllers\Auth\PasswordController::class, 'sendResetLinkEmail']);
+        Route::post('forgot-password', [App\Http\Controllers\Auth\PasswordController::class, 'sendResetLinkEmail'])->middleware('throttle:6,1');
 
         // Reset password
         Route::get('reset-password/{id}/{token}', [App\Http\Controllers\Auth\PasswordController::class, 'showResetForm'])->name('reset-password');
-        Route::post('reset-password', [App\Http\Controllers\Auth\PasswordController::class, 'reset']);
+        Route::post('reset-password', [App\Http\Controllers\Auth\PasswordController::class, 'reset'])->name('new-password');
     });
 
     // Authenticated routes
