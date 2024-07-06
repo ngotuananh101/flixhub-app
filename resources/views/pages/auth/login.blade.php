@@ -78,7 +78,7 @@
                             <!--end::Input group=-->
                             <div class="fv-row mb-3">
                                 <!--begin::Password-->
-                                <input type="password" placeholder="{{ __('auth.password') }}" name="password"
+                                <input type="password" placeholder="{{ __('auth.password2') }}" name="password"
                                     autocomplete="off" class="form-control bg-transparent" />
                                 <!--end::Password-->
                             </div>
@@ -113,7 +113,7 @@
                             <!--begin::Sign up-->
                             <div class="text-gray-500 text-center fw-semibold fs-6">
                                 {{ __('auth.not_member_yet') }}
-                                <a href="authentication/layouts/overlay/sign-up.html" class="link-primary">
+                                <a href="{{  route('auth.register') }}" class="link-primary">
                                     {{ __('auth.register') }}
                                 </a>
                             </div>
