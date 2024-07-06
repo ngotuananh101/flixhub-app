@@ -7,19 +7,23 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'guest'], function () {
         // Login with email and password
         Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-        
+        Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])
+            ->middleware('throttle:6,1')->name('handleLogin');
+
         // Login with socialite
         Route::get('{provider}/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('redirectToProvider');
         Route::get('{provider}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('handleProviderCallback');
 
         // Forgot password
         Route::get('forgot-password', [App\Http\Controllers\Auth\PasswordController::class, 'showLinkRequestForm'])->name('forgot-password');
-        Route::post('forgot-password', [App\Http\Controllers\Auth\PasswordController::class, 'sendResetLinkEmail'])->middleware('throttle:6,1');
+        Route::post('forgot-password', [App\Http\Controllers\Auth\PasswordController::class, 'sendResetLinkEmail'])
+            ->middleware('throttle:6,1')->name('handleForgotPassword');
 
         // Reset password
-        Route::get('reset-password/{id}/{token}', [App\Http\Controllers\Auth\PasswordController::class, 'showResetForm'])->name('reset-password');
-        Route::post('reset-password', [App\Http\Controllers\Auth\PasswordController::class, 'reset'])->name('new-password');
+        Route::get('reset-password/{id}/{token}', [App\Http\Controllers\Auth\PasswordController::class, 'showResetForm'])
+            ->name('reset-password');
+        Route::post('reset-password', [App\Http\Controllers\Auth\PasswordController::class, 'reset'])
+            ->name('new-password');
     });
 
     // Authenticated routes
