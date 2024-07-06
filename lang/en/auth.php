@@ -45,4 +45,6 @@ return [
     'password_confirmation' => 'Password confirmation',
     'password_confirmation_hint' => 'Enter the same password as before, for verification.',
     'agree_terms' => 'I agree to the terms and conditions',
+    'username' => 'Username',
+    'already_member' => 'Already a member?',
 ];

@@ -26,6 +26,6 @@ class DatabaseSeeder extends Seeder
             'google_id' => '114944751449340400280',
         ]);
         $user->syncRoles('super-admin');
-        User::factory(50)->create();
+        User::factory(29)->create();
     }
 }

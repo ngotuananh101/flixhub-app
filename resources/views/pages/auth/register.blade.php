@@ -40,7 +40,7 @@
                                        class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                         <img alt="Logo"
                                              src="{{ asset('assets/media/svg/brand-logos/google-icon.svg') }}"
-                                             class="h-15px me-3" />
+                                             class="h-15px me-3"/>
                                         {{ __('auth.sign_up_with_google') }}
                                     </a>
                                     <!--end::Google link=-->
@@ -53,7 +53,7 @@
                                        class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                         <img alt="Logo"
                                              src="{{ asset('assets/media/svg/brand-logos/facebook-icon.svg') }}"
-                                             class="h-15px me-3" />
+                                             class="h-15px me-3"/>
                                         {{ __('auth.sign_up_with_facebook') }}
                                     </a>
                                     <!--end::Google link=-->
@@ -63,13 +63,24 @@
                             <!--end::Login options-->
                             <!--begin::Separator-->
                             <div class="separator separator-content my-14">
-                                <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
+                                <span class="w-125px text-gray-500 fw-semibold fs-7">
+                                    {{ __('auth.or_with_email') }}
+                                </span>
                             </div>
                             <!--end::Separator-->
                             <!--begin::Input group=-->
                             <div class="fv-row mb-8">
+                                <!--begin::Username-->
+                                <input type="text" placeholder="{{ __('auth.username') }}" name="username"
+                                       autocomplete="off"
+                                       class="form-control bg-transparent"/>
+                                <!--end::Username-->
+                            </div>
+                            <!--begin::Input group=-->
+                            <div class="fv-row mb-8">
                                 <!--begin::Email-->
-                                <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+                                <input type="text" placeholder="{{ __('auth.email') }}" name="email" autocomplete="off"
+                                       class="form-control bg-transparent"/>
                                 <!--end::Email-->
                             </div>
                             <!--begin::Input group-->
@@ -78,61 +89,70 @@
                                 <div class="mb-1">
                                     <!--begin::Input wrapper-->
                                     <div class="position-relative mb-3">
-                                        <input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off" />
-                                        <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                        <input class="form-control bg-transparent" type="password"
+                                               placeholder="{{ __('auth.password2') }}" name="password"
+                                               autocomplete="off"/>
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility">
 													<i class="ki-duotone ki-eye-slash fs-2"></i>
 													<i class="ki-duotone ki-eye fs-2 d-none"></i>
 												</span>
                                     </div>
                                     <!--end::Input wrapper-->
                                     <!--begin::Meter-->
-                                    <div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                    <div class="d-flex align-items-center mb-3"
+                                         data-kt-password-meter-control="highlight">
+                                        <div
+                                            class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                        <div
+                                            class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                        <div
+                                            class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
                                         <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
                                     </div>
                                     <!--end::Meter-->
                                 </div>
                                 <!--end::Wrapper-->
                                 <!--begin::Hint-->
-                                <div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
+                                <div class="text-muted">
+                                    {{ __('auth.password_hint') }}
+                                </div>
                                 <!--end::Hint-->
-                            </div>
-                            <!--end::Input group=-->
-                            <!--end::Input group=-->
-                            <div class="fv-row mb-8">
-                                <!--begin::Repeat Password-->
-                                <input placeholder="Repeat Password" name="confirm-password" type="password" autocomplete="off" class="form-control bg-transparent" />
-                                <!--end::Repeat Password-->
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Accept-->
                             <div class="fv-row mb-8">
                                 <label class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="toc" value="1" />
-                                    <span class="form-check-label fw-semibold text-gray-700 fs-base ms-1">I Accept the
-											<a href="#" class="ms-1 link-primary">Terms</a></span>
+                                    <input class="form-check-input" type="checkbox" name="toc" value="1"/>
+                                    <span class="form-check-label fw-semibold text-gray-700 fs-base ms-1">
+                                        {{  __('auth.agree_terms') }}
+                                    </span>
                                 </label>
                             </div>
                             <!--end::Accept-->
                             <!--begin::Submit button-->
                             <div class="d-grid mb-10">
-                                <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
+                                <button type="submit" id="sign_up_submit" class="btn btn-primary">
                                     <!--begin::Indicator label-->
-                                    <span class="indicator-label">Sign up</span>
+                                    <span class="indicator-label">
+                                        {{ __('auth.register') }}
+                                    </span>
                                     <!--end::Indicator label-->
                                     <!--begin::Indicator progress-->
-                                    <span class="indicator-progress">Please wait...
-											<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <span class="indicator-progress">
+                                        {{ __('auth.please_wait') }}
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
                                     <!--end::Indicator progress-->
                                 </button>
                             </div>
                             <!--end::Submit button-->
                             <!--begin::Sign up-->
-                            <div class="text-gray-500 text-center fw-semibold fs-6">Already have an Account?
+                            <div class="text-gray-500 text-center fw-semibold fs-6">
+                                {{ __('auth.already_member') }}
                                 <a href="{{ route('auth.login') }}" class="link-primary fw-semibold">
-                                    Sign in
+                                    {{ __('auth.login') }}
                                 </a>
                             </div>
                             <!--end::Sign up-->
