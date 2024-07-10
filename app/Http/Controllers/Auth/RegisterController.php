@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -30,6 +31,7 @@ class RegisterController extends Controller
             $user->last_login_at = now();
             $user->save();
             auth()->login($user);
+            event(new Registered($user));
             return response()->json([
                 'status' => 'success',
                 'message' => __('auth.register_success'),

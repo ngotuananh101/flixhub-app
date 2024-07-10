@@ -49,8 +49,16 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'auth'], function () {
         // Logout
         Route::match(['get', 'post'], '/logout', [LogoutController::class, 'logout'])->name('logout');
-        // Verify email
-        Route::get('/email/verify', [VerifyController::class, 'showEmailVerificationForm'])
-            ->name('email-verification.notice');
     });
 });
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/email/verify', [VerifyController::class, 'showEmailVerificationForm'])
+        ->name('verification.notice');
+    Route::post('/email/sent', [VerifyController::class, 'sendVerificationEmail'])
+        ->name('verification.send')->middleware('throttle:6,1');
+});
+
+Route::get('email/verify/{id}/{hash}', [VerifyController::class, 'emailVerify'])
+    ->name('verification.verify')
+    ->middleware('signed');

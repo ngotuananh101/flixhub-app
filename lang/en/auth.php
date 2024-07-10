@@ -48,4 +48,9 @@ return [
     'username' => 'Username',
     'already_member' => 'Already a member?',
     'register_success' => 'Registration successful. Redirecting...',
+
+    'verify_your_email' => 'Verify your email',
+    'verify_email_subtitle' => 'We have sent an email with a link to verify your email address. If you did not receive the email, please check your spam folder.',
+    'resend' => 'Resend',
+    'verification_email_sent' => 'Verification email sent.',
 ];
