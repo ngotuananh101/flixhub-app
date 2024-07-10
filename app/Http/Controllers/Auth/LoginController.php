@@ -23,7 +23,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             // Get intended URL
-            $url = $request->session()->get('url.intended', route('home'));
+            $url = $request->session()->get('url.intended', route('home.index'));
             // Update last login
             auth()->user()->update(['last_login_at' => now()]);
             return response()->json([
