@@ -21,7 +21,7 @@ return [
     'login' => 'Login',
     'login_subtitle' => 'Your Social Campaigns',
     'sign_in_with_google' => 'Sign in with Google',
-    'sign_in_with_facebook' => 'Sign in with Facebook',
+    'sign_in_with_github' => 'Sign in with Github',
     'or_with_email' => 'Or with email',
     'email' => 'Email',
     'password2' => 'Password',
@@ -31,7 +31,7 @@ return [
     'register' => 'Register',
     'register_subtitle' => 'Your Social Campaigns',
     'sign_up_with_google' => 'Sign up with Google',
-    'sign_up_with_facebook' => 'Sign up with Facebook',
+    'sign_up_with_github' => 'Sign up with Github',
 
     'login_success' => 'Login successful. Redirecting...',
     'forgot_password_subtitle' => 'Enter your email to reset your password.',
@@ -47,4 +47,5 @@ return [
     'agree_terms' => 'I agree to the terms and conditions',
     'username' => 'Username',
     'already_member' => 'Already a member?',
+    'register_success' => 'Registration successful. Redirecting...',
 ];

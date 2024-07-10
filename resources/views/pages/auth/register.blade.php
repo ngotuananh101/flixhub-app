@@ -48,13 +48,13 @@
                                 <!--end::Col-->
                                 <!--begin::Col-->
                                 <div class="col-md-6">
-                                    <!--begin::Google link=-->
-                                    <a href="#"
+                                    <!--begin::Github link=-->
+                                    <a href="{{ route('auth.redirectToProvider', ['provider' => 'github', 'auth_state' => 'register']) }}"
                                        class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                         <img alt="Logo"
-                                             src="{{ asset('assets/media/svg/brand-logos/facebook-icon.svg') }}"
+                                             src="{{ asset('assets/media/svg/brand-logos/github-icon.svg') }}"
                                              class="h-15px me-3"/>
-                                        {{ __('auth.sign_up_with_facebook') }}
+                                        {{ __('auth.sign_up_with_github') }}
                                     </a>
                                     <!--end::Google link=-->
                                 </div>
@@ -170,3 +170,11 @@
     </div>
     <!--end::Authentication - Sign-up-->
 @endsection
+@push('scripts')
+    <script src="{{ asset('assets/js/custom/auth/register.js') }}"></script>
+    <script>
+        @if (session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
+    </script>
+@endpush

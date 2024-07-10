@@ -24,6 +24,8 @@ class LoginController extends Controller
         if (auth()->attempt($credentials)) {
             // Get intended URL
             $url = $request->session()->get('url.intended', route('home'));
+            // Update last login
+            auth()->user()->update(['last_login_at' => now()]);
             return response()->json([
                 'status' => 'success',
                 'message' => __('auth.login_success'),
@@ -68,12 +70,14 @@ class LoginController extends Controller
                         $pro_id => $user->id
                     ]);
                     auth()->login($authUser);
-                    return redirect()->route('home');
+                    return redirect()->route('home.index');
                 }
             } else {
                 if ($authUser) {
                     auth()->login($authUser);
-                    return redirect()->route('home');
+                    // Update last login
+                    $authUser->update(['last_login_at' => now()]);
+                    return redirect()->route('home.index');
                 } else {
                     return redirect()->route('auth.login')->with('error', __('auth.failed'));
                 }
