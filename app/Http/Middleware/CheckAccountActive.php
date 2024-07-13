@@ -22,7 +22,6 @@ class CheckAccountActive
     public function __construct(Router $router)
     {
         $this->router = $router;
-        dd($this->router);
     }
 
     /**
