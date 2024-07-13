@@ -25,11 +25,11 @@
 
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <a href="{{ route('admin.roles.create') }}"
-                       class="btn btn-sm fw-bold btn-primary">
+                    <button class="btn btn-sm fw-bold btn-primary"
+                       data-bs-toggle="modal" data-bs-target="#kt_modal_create_user">
                         <i class="ki-duotone ki-plus"></i>
                         {{ __('admin.users.actions.create') }}
-                    </a>
+                    </button>
                 </div>
                 <!--end::Actions-->
             </div>
@@ -115,6 +115,9 @@
         </div>
         <!--end::Content-->
     </div>
+    <!--begin::Modal - Create user-->
+    @include('pages.admin.users.create')
+    <!--end::Modal - Create user-->
 @endsection
 
 @push('scripts')

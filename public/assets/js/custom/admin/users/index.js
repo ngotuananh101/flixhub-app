@@ -125,7 +125,7 @@ $(document).ready(function () {
                         }
                     });
                 }
-            }); 
+            });
         } else {
             toastr.error(translation.users.actions.no_selected);
         }
@@ -164,4 +164,11 @@ $(document).ready(function () {
             }
         });
     };
+
+
+    /**
+     * Create users
+     *
+     */
+    let createUserElement = $('#kt_modal_create_user');
 });
