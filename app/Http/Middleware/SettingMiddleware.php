@@ -26,6 +26,7 @@ class SettingMiddleware
         config([
             'settings' => $settings,
         ]);
+
         return $next($request);
     }
 }

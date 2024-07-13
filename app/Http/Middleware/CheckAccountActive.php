@@ -41,7 +41,7 @@ class CheckAccountActive
             if (!auth()->user()->is_active) {
                 // Logout the user and abort the request
                 auth()->logout();
-                abort(403, 'Your account is not active.');
+                abort(403, 'Your account is not active. If you think this is a mistake, please contact the administrator by email: ' . env('CONTACT_EMAIL'));
             }
         }
         return $next($request);
