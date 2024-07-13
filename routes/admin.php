@@ -8,14 +8,14 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TitleController;
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'permission']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'permission', 'check-account-active']], function () {
     /**
      * Admin Home Page
      */
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     // Fast login to super admin
-//    Route::get('fast-login', [HomeController::class, 'fastLogin'])->name('fast-login');
+    //    Route::get('fast-login', [HomeController::class, 'fastLogin'])->name('fast-login');
 
     /**
      * Handle Datatables requests

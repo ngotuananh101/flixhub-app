@@ -7,6 +7,7 @@ use Sentry\Laravel\Integration;
 use App\Http\Middleware\SettingMiddleware;
 use Illuminate\Http\Request;
 use App\Http\Middleware\PermissionMiddleware;
+use App\Http\Middleware\CheckAccountActive;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Set alias
         $middleware->alias([
             'permission' => PermissionMiddleware::class,
+            'check-account-active' => CheckAccountActive::class,
         ]);
         // Redirect to login page if user is not authenticated
         $middleware->redirectGuestsTo(fn (Request $request) => route('auth.login'));
