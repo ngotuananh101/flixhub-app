@@ -39,6 +39,8 @@ class CheckAccountActive
         if (in_array('auth', $middlewares)) {
             // Check if the user is not active
             if (!auth()->user()->is_active) {
+                // Logout the user and abort the request
+                auth()->logout();
                 abort(403, 'Your account is not active.');
             }
         }
