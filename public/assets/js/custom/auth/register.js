@@ -4,13 +4,6 @@ toastr.options = {
 };
 
 $(document).ready(function () {
-    let t = (key, attribute) => {
-        let string = validation_lang[key];
-        if (attribute !== undefined) {
-            string = string.replace(":attribute", attribute);
-        }
-        return string;
-    };
     let form = document.getElementById('sign_up_form');
     let btnSubmit = form.querySelector('#sign_up_submit');
     let validator = FormValidation.formValidation(form, {
@@ -18,31 +11,31 @@ $(document).ready(function () {
             username: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Username"),
+                        message: t("validation", "required", { attribute: "Username" }),
                     },
                 },
             },
             email: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Email"),
+                        message: t("validation", "required", { attribute: "Email" }),
                     },
                     emailAddress: {
-                        message: t("email", "Email"),
+                        message: t("validation", "email"),
                     },
                 },
             },
             password: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Password"),
+                        message: t("validation", "required", { attribute: "Password" }),
                     },
                 }
             },
             toc: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Terms and Conditions"),
+                        message: t("validation", "required", { attribute: "Terms and Conditions" }),
                     },
                 },
             },

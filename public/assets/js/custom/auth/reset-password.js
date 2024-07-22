@@ -1,12 +1,4 @@
 $(document).ready(function () {
-    let t = (key, attribute) => {
-        let string = validation_lang[key];
-        if (attribute !== undefined) {
-            string = string.replace(":attribute", attribute);
-        }
-        return string;
-    };
-
     let form = document.getElementById('new_password_form');
     let btnSubmit = form.querySelector('#new_password_submit');
     let validator = FormValidation.formValidation(form, {
@@ -14,12 +6,12 @@ $(document).ready(function () {
             password: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Password"),
-                    }, 
+                        message: t("validation", "required", { attribute: "Password" }),
+                    },
                     stringLength: {
                         min: 8,
                         message: function () {
-                            return validation_lang['size']['string'].replace(":attribute", "Password").replace(":size", 8);
+                            return t("validation", "size.string", { attribute: "Password", size: 8 });
                         },
                     },
                 },

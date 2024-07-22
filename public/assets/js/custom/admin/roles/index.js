@@ -93,12 +93,12 @@ $(document).ready(function () {
         if (typeof ids === 'string' || typeof ids === 'number') ids = [ids];
         if (ids.length > 0) {
             Swal.fire({
-                text: translation.roles.actions.delete_confirmation,
+                text: t('admin', 'roles.actions.delete_confirmation'),
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
-                confirmButtonText: translation.roles.actions.delete_confirm,
-                cancelButtonText: translation.roles.actions.cancel,
+                confirmButtonText: t('admin', 'roles.actions.delete_confirm'),
+                cancelButtonText: t('admin', 'roles.actions.cancel'),
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"

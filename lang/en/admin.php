@@ -142,6 +142,10 @@ return [
             'delete_confirm' => 'Yes, delete them!',
             'delete_success' => 'Selected users have been deleted successfully!',
             'delete_error' => 'Could not delete :names ! Please try again later!',
+            'remove_avatar' => 'Remove Avatar',
+            'cancel_avatar' => 'Cancel',
+            'change_avatar' => 'Change Avatar',
+            'form_invalid' => 'Please fill in all required fields!',
         ],
         'fields' => [
             'user' => 'User',
@@ -159,6 +163,10 @@ return [
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',
             'actions' => 'Actions',
+            'avatar' => 'Avatar',
+            'avatar_hint' => 'Allowed file types: png, jpg, jpeg. Max file size 5MB.',
+            'password' => 'Password',
+            'password_confirmation' => 'Password Confirmation',
         ]
     ]
 ];

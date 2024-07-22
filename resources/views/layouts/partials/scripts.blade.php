@@ -7,15 +7,17 @@
 <script>
     $(document).ready(function () {
         let themeMenuElement = document.getElementById('kt-change-theme-mode');
-        let themeMenu = KTMenu.getInstance(themeMenuElement);
-        themeMenu.on('kt.menu.link.clicked', function (element) {
-            let themeMode = element.getAttribute('data-kt-value');
-            if (themeMode === "system") {
-                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            }
-            localStorage.setItem('data-bs-theme', themeMode);
-            localStorage.setItem('data-bs-theme-mode', themeMode);
-            KTThemeMode.setMode(themeMode);
-        });
+        if(themeMenuElement) {
+            let themeMenu = KTMenu.getInstance(themeMenuElement);
+            themeMenu.on('kt.menu.link.clicked', function (element) {
+                let themeMode = element.getAttribute('data-kt-value');
+                if (themeMode === "system") {
+                    themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                }
+                localStorage.setItem('data-bs-theme', themeMode);
+                localStorage.setItem('data-bs-theme-mode', themeMode);
+                KTThemeMode.setMode(themeMode);
+            });
+        }
     });
 </script>

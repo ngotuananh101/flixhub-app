@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -13,7 +14,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.users.index');
+        $is_superadmin = auth()->user()->hasRole('super-admin');
+        if ($is_superadmin) {
+            $role = Role::all()->pluck('name', 'id');
+        } else {
+            $role = Role::where('name', '!=', 'super-admin')->get()->pluck('name', 'id');
+        }
+        return view('pages.admin.users.index', [
+            'roles' => $role,
+        ]);
     }
 
     /**
@@ -29,7 +38,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

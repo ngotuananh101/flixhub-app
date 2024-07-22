@@ -1,11 +1,4 @@
 $(document).ready(function () {
-    let t = (key, attribute) => {
-        let string = validation_lang[key];
-        if (attribute !== undefined) {
-            string = string.replace(":attribute", attribute);
-        }
-        return string;
-    };
     let form = document.getElementById('password_reset_form');
     let btnSubmit = form.querySelector('#password_reset_submit');
     var validator = FormValidation.formValidation(form, {
@@ -13,10 +6,10 @@ $(document).ready(function () {
             email: {
                 validators: {
                     notEmpty: {
-                        message: t("required", "Email"),
+                        message: t("validation", "required", { attribute: "Email" }),
                     },
                     emailAddress: {
-                        message: t("email", "Email"),
+                        message: t("validation", "email"),
                     },
                 },
             },
