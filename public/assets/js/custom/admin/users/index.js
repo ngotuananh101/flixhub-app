@@ -77,7 +77,6 @@ $(document).ready(function () {
     });
     selectAllCheckbox.on('change', function () {
         let rows = usersTable.rows({ page: 'current' }).nodes();
-        console.log(rows);
         let isChecked = selectAllCheckbox.is(':checked');
         $('input[type="checkbox"]', rows).each(function () {
             this.checked = isChecked;

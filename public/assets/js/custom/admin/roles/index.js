@@ -55,7 +55,6 @@ $(document).ready(function () {
         $('a[data-kt-users-table-filter="delete_row"]').on('click', function (event) {
             event.preventDefault();
             const id = $(this).data('id');
-            console.log(id)
             deleteSelected(id);
         })
     });
