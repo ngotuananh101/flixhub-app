@@ -37,8 +37,9 @@
 - [x] Logout
 
 #### Admin
-- [x] General Settings (App Name, App Description, App URL, App Timezone, App Locale, App Theme, App Favicon, App Logo Small, App Logo, App Logo Dark)
-- [x] Role Management (Add, Edit, Delete)
+- [x] General Settings
+- [x] Email Settings
+- [x] Role Management
 - [ ] User Management:
 -    - [x] List
 -    - [x] Add
