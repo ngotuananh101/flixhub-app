@@ -39,6 +39,8 @@
 #### Admin
 - [x] General Settings
 - [x] Email Settings
+- [x] Cache Settings
+- [x] Logging Settings
 - [x] Role Management
 - [ ] User Management:
 -    - [x] List
