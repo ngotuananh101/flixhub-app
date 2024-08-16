@@ -21,7 +21,7 @@
             <!--begin::Modal body-->
             <div class="modal-body py-lg-10 px-lg-10">
                 <!--begin::Form-->
-                <form id="create_user_form" class="form" action="{{ route('admin.users.store') }}" 
+                <form id="create_user_form" class="form" action="{{ route('admin.users.store') }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Input group-->
@@ -200,7 +200,7 @@
                         <div class="col-lg-8 d-flex align-items-center">
                             <div class="form-check form-check-solid form-switch form-check-custom fv-row">
                                 <input class="form-check-input w-45px h-30px" type="checkbox" id="is_active"
-                                    checked="checked" name="is_active">
+                                    checked="checked" name="is_active" value="1">
                                 <label class="form-check-label" for="is_active"></label>
                             </div>
                         </div>

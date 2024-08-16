@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
 
         static::creating(function ($model) {
-            if(empty($model->avatar)) {
+            if (empty($model->avatar)) {
                 $model->avatar = 'https://ui-avatars.com/api/?background=random&size=256&name=' . $model->username;
             }
         });
@@ -81,8 +81,32 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Getter
      */
-    public function getAvatarAttribute($value): string
+    public function getAvatarAttribute(): string
     {
-        return $value ?? 'https://ui-avatars.com/api/?background=random&size=256&name=' . $this->username;
+        if (!empty($this->attributes['avatar'])) {
+            return config('app.url') . $this->attributes['avatar'];
+        } else {
+            return 'https://ui-avatars.com/api/?background=random&size=256&name=' . $this->username;
+        }
+    }
+
+    /**
+     * Setter
+     */
+    public function setAvatarAttribute($value): void
+    {
+        // Check if the value is empty
+        if (!empty($value)) {
+            // Check value is file
+            if (is_file($value)) {
+                $fileName = md5(time() . $value->getClientOriginalName()) . '.' . $value->getClientOriginalExtension();
+                $value->move(public_path('/storage/avatars') . '/' . $fileName);
+                $this->attributes['avatar'] = '/storage/avatars/' . $fileName;
+            } else {
+                $this->attributes['avatar'] = $value;
+            }
+        } else {
+            $this->attributes['avatar'] = 'https://ui-avatars.com/api/?background=random&size=256&name=' . $this->username;
+        }
     }
 }

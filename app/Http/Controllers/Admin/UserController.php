@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -38,7 +39,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        try {
+            $request->validate([
+                'avatar' => 'nullable|image|max:2048',
+                'username' => 'required|string|max:255|unique:users',
+                'email' => 'required|string|email|max:255|unique:users',
+                'email_verified_at' => 'nullable|date',
+                'password' => 'required|string|min:8|confirmed',
+                'is_active' => 'nullable|boolean',
+                'roles' => 'nullable|array',
+            ]);
+            $user = new User();
+            $user->avatar = $request->file('avatar');
+            $user->username = $request->input('username');
+            $user->email = $request->input('email');
+            $user->email_verified_at = $request->input('email_verified_at');
+            $user->password = Hash::make($request->input('password'));
+            $user->is_active = $request->input('is_active') ?? 0;
+            $user->save();
+            if ($request->has('roles')) {
+                $roles = Role::whereIn('id', $request->input('roles'))->get();
+                $user->syncRoles($roles);
+            }
+            return response()->json([
+                'success' => true,
+                'message' => __('admin.users.actions.create_success', ['name' => $user->username]),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**

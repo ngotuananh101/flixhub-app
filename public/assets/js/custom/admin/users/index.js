@@ -248,8 +248,8 @@ $(document).ready(function () {
                     success: function (response) {
                         toastr.success(response.message);
                         create_user_form.reset();
-                        create_user_form_validation.reset();
                         usersTable.ajax.reload();
+                        $('#kt_modal_create_user').modal('hide');
                     },
                     error: function (response) {
                         toastr.error(response.responseJSON.message);

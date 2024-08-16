@@ -15,9 +15,7 @@ class PermissionSeeder extends Seeder
         foreach ($routes as $route) {
             // Get route name
             $routeName = $route->getName();
-            // Get route middleware
-            $middleware = $route->middleware()[0];
-            if($routeName != '' && $middleware == 'web') {
+            if($routeName != '') {
                 $permission = Permission::where('name', $routeName)->first();
                 if(!$permission) {
                     Permission::create([

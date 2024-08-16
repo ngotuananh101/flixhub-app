@@ -146,6 +146,7 @@ return [
             'cancel_avatar' => 'Cancel',
             'change_avatar' => 'Change Avatar',
             'form_invalid' => 'Please fill in all required fields!',
+            'create_success' => 'User :name has been created successfully!',
         ],
         'fields' => [
             'user' => 'User',
@@ -165,7 +166,6 @@ return [
             'actions' => 'Actions',
             'avatar' => 'Avatar',
             'avatar_hint' => 'Allowed file types: png, jpg, jpeg. Max file size 5MB.',
-            'password' => 'Password',
             'password_confirmation' => 'Password Confirmation',
         ]
     ]
