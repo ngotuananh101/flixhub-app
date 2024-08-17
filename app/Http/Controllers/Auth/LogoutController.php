@@ -11,6 +11,9 @@ class LogoutController extends Controller
 {
     public function logout(Request $request)
     {
+        // Log activity
+        activity()->causedBy(auth()->user())->log('Logged out');
+        // Logout
         auth()->logout();
         return redirect()->route('auth.login');
     }

@@ -50,7 +50,7 @@ class PasswordController extends Controller
     {
         $user = User::find($id);
         return view('pages.auth.passwords.update', [
-            'token' => $token, 
+            'token' => $token,
             'email' => $user->email
         ]);
     }
@@ -79,6 +79,8 @@ class PasswordController extends Controller
                 }
             );
             if ($status === Password::PASSWORD_RESET) {
+                // Log activity
+                activity()->causedBy(auth()->user())->log('Password reset');
                 return response()->json([
                     'status' => 'success',
                     'message' => __('passwords.reset'),

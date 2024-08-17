@@ -32,6 +32,8 @@ class RegisterController extends Controller
             $user->save();
             auth()->login($user);
             event(new Registered($user));
+            // Log activity
+            activity()->causedBy(auth()->user())->log('Registered new account');
             return response()->json([
                 'status' => 'success',
                 'message' => __('auth.register_success'),

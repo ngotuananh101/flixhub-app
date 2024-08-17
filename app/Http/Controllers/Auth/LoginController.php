@@ -26,6 +26,7 @@ class LoginController extends Controller
             $url = $request->session()->get('url.intended', route('home.index'));
             // Update last login
             auth()->user()->update(['last_login_at' => now()]);
+            activity()->causedBy(auth()->user())->log('Logged in');
             return response()->json([
                 'status' => 'success',
                 'message' => __('auth.login_success'),
@@ -70,6 +71,9 @@ class LoginController extends Controller
                         $pro_id => $user->id
                     ]);
                     auth()->login($authUser);
+                    // Update last login
+                    $authUser->update(['last_login_at' => now()]);
+                    activity()->causedBy(auth()->user())->log('Logged in');
                     return redirect()->route('home.index');
                 }
             } else {
@@ -77,6 +81,7 @@ class LoginController extends Controller
                     auth()->login($authUser);
                     // Update last login
                     $authUser->update(['last_login_at' => now()]);
+                    activity()->causedBy(auth()->user())->log('Logged in');
                     return redirect()->route('home.index');
                 } else {
                     return redirect()->route('auth.login')->with('error', __('auth.failed'));

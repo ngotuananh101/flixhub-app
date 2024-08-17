@@ -40,6 +40,8 @@ class VerifyController extends Controller
                 $user = auth()->user();
             }
             if (!$user->hasVerifiedEmail()) {
+                // log activity
+                activity()->causedBy($user)->log('Email verified');
                 $user->markEmailAsVerified();
             }
             return redirect()->route('home.index');
