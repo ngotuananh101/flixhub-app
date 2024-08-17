@@ -24,6 +24,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'p
         Route::post('roles', [DatatableController::class, 'roles'])->name('datatables.roles');
         Route::post('users', [DatatableController::class, 'users'])->name('datatables.users');
         Route::post('titles', [DatatableController::class, 'titles'])->name('datatables.titles');
+        Route::post('user-sessions/{id}', [DatatableController::class, 'userSessions'])->name('datatables.user-sessions');
     });
 
     /**
@@ -41,6 +42,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'p
      * Users
      */
     Route::resource('users', UserController::class);
+    Route::post('users/location', [UserController::class, 'checkLocation'])->name('users.location');
 
     /**
      * Titles

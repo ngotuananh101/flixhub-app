@@ -12,7 +12,11 @@ class LogoutController extends Controller
     public function logout(Request $request)
     {
         // Log activity
-        activity()->causedBy(auth()->user())->log('Logged out');
+        $loginSession = session()->get('current_session');
+        if ($loginSession) {
+            $loginSession->status = 'logged_out';
+            $loginSession->save();
+        }
         // Logout
         auth()->logout();
         return redirect()->route('auth.login');

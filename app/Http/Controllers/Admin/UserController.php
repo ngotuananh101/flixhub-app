@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\LoginSessions;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Stevebauman\Location\Facades\Location;
 
 class UserController extends Controller
 {
@@ -24,14 +26,6 @@ class UserController extends Controller
         return view('pages.admin.users.index', [
             'roles' => $role,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -78,15 +72,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $user = User::findOrFail($id);
+        return view('pages.admin.users.show', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -98,6 +87,7 @@ class UserController extends Controller
             $action = $request->input('action');
             return match ($action) {
                 'block' => $this->block($request),
+                'unblock' => $this->unblock($request),
                 default => abort(404),
             };
         }
@@ -210,6 +200,72 @@ class UserController extends Controller
             return response()->json([
                 'message' => __('admin.users.actions.block_error', ['name' => $user->username]),
                 'error' => 'User not found!'
+            ], 500);
+        }
+    }
+
+    /**
+     * Check location based on IP
+     */
+    public function checkLocation(Request $request)
+    {
+        try {
+            $id = $request->input('id');
+            $session = LoginSessions::find($id);
+            if ($session) {
+                $position = Location::get($session->ip);
+                if ($position) {
+//                    return response()->json([
+//                        'success' => true,
+//                        'message' => __('admin.users.actions.check_location_success'),
+//                        'position' => [
+//                            'asName' => $position->asName,
+//                            'cityName' => $position->cityName,
+//                            'countryName' => $position->countryName,
+//                            'latitude' => $position->latitude,
+//                            'longitude' => $position->longitude,
+//                            'map' => 'https://maps.google.com/?q=' . $position->latitude . ',' . $position->longitude
+//                        ]
+//                    ]);
+                    $html = '<table class="table table-bordered">'
+                        . '<tr>'
+                        . '<td>' . __('admin.users.actions.as_name') . '</td>'
+                        . '<td>' . $position->asName . '</td>'
+                        . '</tr>'
+                        . '<tr>'
+                        . '<td>' . __('admin.users.actions.city_name') . '</td>'
+                        . '<td>' . $position->cityName . '</td>'
+                        . '</tr>'
+                        . '<tr>'
+                        . '<td>' . __('admin.users.actions.country_name') . '</td>'
+                        . '<td>' . $position->countryName . '</td>'
+                        . '</tr>'
+                        . '<tr>'
+                        . '<td>' . __('admin.users.actions.latitude') . '</td>'
+                        . '<td>' . $position->latitude . '</td>'
+                        . '</tr>'
+                        . '<tr>'
+                        . '<td>' . __('admin.users.actions.longitude') . '</td>'
+                        . '<td>' . $position->longitude . '</td>'
+                        . '</tr>'
+                        . '<tr>'
+                        . '<td>' . __('admin.users.actions.map') . '</td>'
+                        . '<td><a href="https://maps.google.com/?q=' . $position->latitude . ',' . $position->longitude . '" target="_blank">' . __('admin.users.actions.view_on_map') . '</a></td>'
+                        . '</tr>'
+                        . '</table>';
+                    return response()->json([
+                        'success' => true,
+                        'message' => __('admin.users.actions.check_location_success'),
+                        'position' => $html
+                    ]);
+                }
+            }
+            throw new \Exception(__('admin.users.actions.check_location_error'));
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => __('admin.users.actions.check_location_error'),
+                'error' => $th->getMessage()
             ], 500);
         }
     }
