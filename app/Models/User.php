@@ -83,8 +83,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly($this->fillable)
-            ->dontLog(['password', 'remember_token']);
+            ->logOnly($this->fillable);
     }
 
     /**

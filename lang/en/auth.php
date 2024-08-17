@@ -7,9 +7,8 @@ return [
     | Authentication Language Lines
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
+    | These language lines are used during authentication for various
+    | messages that we need to display to the user.
     |
     */
 
@@ -19,38 +18,38 @@ return [
     'exists' => 'Email already exists. Please login.',
 
     'login' => 'Login',
-    'login_subtitle' => 'Your Social Campaigns',
+    'login_subtitle' => 'Manage Your Social Campaigns',
     'sign_in_with_google' => 'Sign in with Google',
-    'sign_in_with_github' => 'Sign in with Github',
-    'or_with_email' => 'Or with email',
+    'sign_in_with_github' => 'Sign in with GitHub',
+    'or_with_email' => 'Or sign in with email',
     'email' => 'Email',
     'password2' => 'Password',
-    'forgot_password' => 'Forgot password',
+    'forgot_password' => 'Forgot Password?',
     'please_wait' => 'Please wait...',
     'not_member_yet' => 'Not a member yet?',
     'register' => 'Register',
-    'register_subtitle' => 'Your Social Campaigns',
+    'register_subtitle' => 'Join Us Today',
     'sign_up_with_google' => 'Sign up with Google',
-    'sign_up_with_github' => 'Sign up with Github',
+    'sign_up_with_github' => 'Sign up with GitHub',
 
-    'login_success' => 'Login successful. Redirecting...',
+    'login_success' => 'Login successful! Redirecting...',
     'forgot_password_subtitle' => 'Enter your email to reset your password.',
     'general_error' => 'An error occurred. Please try again later.',
     'ok' => 'OK, got it!',
     'cancel' => 'Cancel',
     'submit' => 'Submit',
-    'reset_password' => 'Reset password',
-    'reset_password_subtitle' => 'Have you already reset the password ?',
+    'reset_password' => 'Reset Password',
+    'reset_password_subtitle' => 'Already reset your password?',
     'password_hint' => 'Use 8 or more characters with a mix of letters, numbers & symbols.',
-    'password_confirmation' => 'Password confirmation',
-    'password_confirmation_hint' => 'Enter the same password as before, for verification.',
-    'agree_terms' => 'I agree to the terms and conditions',
+    'password_confirmation' => 'Confirm Password',
+    'password_confirmation_hint' => 'Re-enter the password for verification.',
+    'agree_terms' => 'I agree to the Terms and Conditions',
     'username' => 'Username',
     'already_member' => 'Already a member?',
-    'register_success' => 'Registration successful. Redirecting...',
+    'register_success' => 'Registration successful! Redirecting...',
 
-    'verify_your_email' => 'Verify your email',
-    'verify_email_subtitle' => 'We have sent an email with a link to verify your email address. If you did not receive the email, please check your spam folder.',
+    'verify_your_email' => 'Verify Your Email',
+    'verify_email_subtitle' => 'We have sent a verification link to your email. If you did not receive it, check your spam folder.',
     'resend' => 'Resend',
     'verification_email_sent' => 'Verification email sent.',
 ];
