@@ -22,6 +22,13 @@ class RoleController extends Controller
             foreach ($ids as $id) {
                 $role = Role::find($id);
                 if ($role->can_not_delete == 0 && $role->is_default == 0) {
+                    // log activity
+                    activity()
+                        ->causedBy(auth()->user())
+                        ->performedOn($role)
+                        ->event('deleted')
+                        ->withProperties($role->getAttributes())
+                        ->log('Role deleted');
                     $role->delete();
                 } else {
                     $errors[] = $role->name;
@@ -147,6 +154,13 @@ class RoleController extends Controller
             $role->syncPermissions($permissions);
             $role->updated_at = now();
             $role->save();
+            // log activity
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($role)
+                ->event('updated')
+                ->withProperties($role->getAttributes())
+                ->log('Role updated');
             return redirect()->route('admin.roles.index')->with('success', __('admin.roles.actions.edit_success', ['name' => $role->name]));
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
@@ -194,6 +208,13 @@ class RoleController extends Controller
                 }
             }
             $role->syncPermissions($permissions);
+            // log activity
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($role)
+                ->event('created')
+                ->withProperties($role->getAttributes())
+                ->log('Role created');
             return redirect()->route('admin.roles.index')->with('success', __('admin.roles.actions.create_success', ['name' => $role->name]));
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
